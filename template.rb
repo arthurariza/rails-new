@@ -17,6 +17,7 @@ git_add_and_commit "Add development and test gems"
 
 gem_group :development do
   gem "bullet"
+  gem "hotwire-spark"
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
