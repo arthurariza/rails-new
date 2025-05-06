@@ -1,7 +1,7 @@
 # Rails App Creator
 ## Usage
 ```
-mkdir project_name
+mkdir project_name && cd project_name
 ```
 
 ```
