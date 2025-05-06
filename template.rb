@@ -16,7 +16,7 @@ git_add_and_commit "Add development and test gems"
 
 gem_group :development do
   gem "bullet"
-  gem "hotwire-spark"
+  gem "hotwire-spark" if yes?("Do you want to use hotwire-spark?")
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
@@ -55,7 +55,7 @@ after_bundle do
 
   git_add_and_commit "Configure FactoryBot and Shoulda Matchers"
 
-  run "yes | bin/rails generate bullet:install"
+  run "bin/rails generate bullet:install"
   git_add_and_commit "Install Bullet"
 
   # create directories and files
@@ -66,6 +66,8 @@ after_bundle do
   # copy new files that should always be in project
   copy_file File.expand_path("../files/.rubocop.yml", __FILE__), ".rubocop.yml"
   git_add_and_commit "Copy .rubocop.yml"
+
+  generate(:authentication) if yes?("Do you want to use authentication?")
 
   run "rails db:prepare"
   git_add_and_commit "Prepare database"
