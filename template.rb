@@ -64,7 +64,7 @@ after_bundle do
   git_add_and_commit "Create directories and files"
 
   # copy new files that should always be in project
-  copy_file "files/.rubocop.yml", ".rubocop.yml"
+  copy_file File.expand_path("../files/.rubocop.yml", __FILE__), ".rubocop.yml"
   git_add_and_commit "Copy .rubocop.yml"
 
   run "rails db:prepare"
