@@ -1,9 +1,8 @@
 def git_add_and_commit(message)
   git add: "."
-  git commit: "-m #{message}"
+  git commit: "-m '#{message}'"
 end
 
-git :init
 git_add_and_commit "Initial commit"
 
 gem_group :development, :test do
