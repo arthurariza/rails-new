@@ -30,9 +30,6 @@ end
 
 git_add_and_commit "Add test gems"
 
-run "bundle install"
-git_add_and_commit "Install gems"
-
 # adds lines to `config/application.rb`
 environment 'config.autoload_paths << Rails.root.join("services")'
 
@@ -41,6 +38,25 @@ after_bundle do
   # setup RSpec testing
   run "bin/rails generate rspec:install"
   git_add_and_commit "Setup RSpec"
+
+  # Configure FactoryBot and Shoulda Matchers in rails_helper.rb
+  insert_into_file "spec/rails_helper.rb", after: "RSpec.configure do |config|\n" do
+    "  config.include FactoryBot::Syntax::Methods\n"
+  end
+
+  append_to_file "spec/rails_helper.rb" do
+    "\nShoulda::Matchers.configure do |config|\n" +
+    "  config.integrate do |with|\n" +
+    "    with.test_framework :rspec\n" +
+    "    with.library :rails\n" +
+    "  end\n" +
+    "end\n"
+  end
+
+  git_add_and_commit "Configure FactoryBot and Shoulda Matchers"
+
+  run "yes | bin/rails generate bullet:install"
+  git_add_and_commit "Install Bullet"
 
   # create directories and files
   run "mkdir app/services"
