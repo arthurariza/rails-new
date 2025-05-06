@@ -1,0 +1,7 @@
+--database=sqlite3 
+--asset-pipeline=propshaft 
+--css=tailwind 
+--skip-jbuilder 
+--skip-spring 
+--skip-bootsnap
+--skip-test
