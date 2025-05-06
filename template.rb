@@ -60,12 +60,12 @@ after_bundle do
   git_add_and_commit "Install Bullet"
 
   # create directories and files
-  run "mkdir app/services"
-  run "touch app/services/.keep .rubocop.yml .env .env.template"
+  run "mkdir ../app/services"
+  run "touch ../app/services/.keep ../.rubocop.yml ../.env ../.env.template"
   git_add_and_commit "Create directories and files"
 
   # copy new files that should always be in project
-  copy_file "files/.rubocop.yml", ".rubocop.yml"
+  copy_file "../files/.rubocop.yml", ".rubocop.yml"
   git_add_and_commit "Copy .rubocop.yml"
 end
 
