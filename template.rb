@@ -87,6 +87,9 @@ after_bundle do
   run "rm bin/rails-new"
   git_add_and_commit "Cleanup"
 
+  run "bundle exec rubocop -a"
+  git_add_and_commit "Rubocop auto-correct"
+
   run "bundle exec strong_versions -a"
   git_add_and_commit "Strong versions auto-correct"
 end
