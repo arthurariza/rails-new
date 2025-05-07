@@ -75,13 +75,8 @@ after_bundle do
 
   if yes?("Do you want to use Active Storage?")
     rails_command "active_storage:install"
-
     git_add_and_commit "Install Active Storage"
   end
-
-
-  run "bundle exec strong_versions -a"
-  git_add_and_commit "Strong versions auto-correct"
 
   run "rails db:prepare"
   git_add_and_commit "Prepare database"
@@ -90,6 +85,8 @@ after_bundle do
   run "rm railsrc"
   run "rm template.rb"
   run "rm bin/rails-new"
-
   git_add_and_commit "Cleanup"
+
+  run "bundle exec strong_versions -a"
+  git_add_and_commit "Strong versions auto-correct"
 end
