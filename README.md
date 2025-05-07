@@ -3,15 +3,18 @@
 A template for creating new Rails applications with a pre-configured set of gems and tools.
 
 ## Usage
+Create a new directory with the name of your project and change directory into it.
 
 ```
 mkdir project_name && cd project_name
 ```
 
+Clone this repository into the directory
 ```
 git clone git@github.com:arthurariza/rails-new.git .
 ```
 
+Run the script
 ```
 bin/rails-new
 ```
