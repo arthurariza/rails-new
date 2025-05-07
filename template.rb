@@ -71,6 +71,7 @@ after_bundle do
 
   if yes?("Do you want to use authentication?")
     generate(:authentication)
+    route "root to: 'sessions#new'"
     git_add_and_commit "Generate authentication"
     # TODO: Fix error factory_bot [not found] when running `rails g authentication`
   end
