@@ -10,12 +10,12 @@ gem_group :development, :test do
   gem "factory_bot_rails"
   gem "faker"
   gem "dotenv-rails"
+  gem "bullet"
 end
 
 git_add_and_commit "Add development and test gems"
 
 gem_group :development do
-  gem "bullet"
   gem "hotwire-spark" if yes?("Do you want to use hotwire-spark?")
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
