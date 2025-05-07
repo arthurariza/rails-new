@@ -53,3 +53,6 @@ This template installs and configures the following gems:
 
 Based on [this blog post](https://danielabaron.me/blog/kickstart-a-new-rails-project/#rubocop), [this repository](https://github.com/CodingItWrong/apiup/tree/main), and [official Rails template guide](https://guides.rubyonrails.org/rails_application_templates.html)
 
+## License
+
+This project is available as open source under the terms of the [MIT License](LICENSE).
