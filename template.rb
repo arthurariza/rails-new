@@ -20,6 +20,7 @@ gem_group :development do
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
+  gem 'strong_versions'
 end
 
 git_add_and_commit "Add development gems"
@@ -67,8 +68,28 @@ after_bundle do
   copy_file File.expand_path("../files/.rubocop.yml", __FILE__), ".rubocop.yml"
   git_add_and_commit "Copy .rubocop.yml"
 
-  generate(:authentication) if yes?("Do you want to use authentication?")
+  if yes?("Do you want to use authentication?")
+    generate(:authentication)
+    git_add_and_commit "Generate authentication"
+  end
+
+  if yes?("Do you want to use Active Storage?")
+    rails_command "active_storage:install"
+
+    git_add_and_commit "Install Active Storage"
+  end
+
+
+  run "bundle exec strong_versions -a"
+  git_add_and_commit "Strong versions auto-correct"
 
   run "rails db:prepare"
   git_add_and_commit "Prepare database"
+
+  run "rm -rf files/"
+  run "rm railsrc"
+  run "rm template.rb"
+  run "rm bin/rails-new"
+
+  git_add_and_commit "Cleanup"
 end
