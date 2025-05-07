@@ -59,6 +59,7 @@ after_bundle do
   git_add_and_commit "Install Bullet"
 
   # create directories and files
+  run "mkdir spec/factories"
   run "mkdir app/services"
   run "touch app/services/.keep .rubocop.yml .env .env.template"
   git_add_and_commit "Create directories and files"
