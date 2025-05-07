@@ -66,7 +66,8 @@ after_bundle do
 
   # copy new files that should always be in project
   copy_file File.expand_path("../files/.rubocop.yml", __FILE__), ".rubocop.yml"
-  git_add_and_commit "Copy .rubocop.yml"
+  copy_file File.expand_path("../files/application_service.rb", __FILE__), "app/services/application_service.rb"
+  git_add_and_commit "Copy files"
 
   if yes?("Do you want to use authentication?")
     generate(:authentication)
