@@ -20,7 +20,6 @@ gem_group :development do
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
-  gem 'strong_versions'
 end
 
 git_add_and_commit "Add development gems"
@@ -89,7 +88,4 @@ after_bundle do
 
   run "bundle exec rubocop -a"
   git_add_and_commit "Rubocop auto-correct"
-
-  run "bundle exec strong_versions -a"
-  git_add_and_commit "Strong versions auto-correct"
 end
