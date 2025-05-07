@@ -86,9 +86,7 @@ after_bundle do
   run "rm railsrc"
   run "rm template.rb"
   run "rm bin/rails-new"
-  insert_into_file ".gitignore" do
-    "!.env.template"
-  end
+  append_to_file ".gitignore", "\n!.env.template\n"
   git_add_and_commit "Cleanup"
 
   run "bundle exec rubocop -a"
