@@ -20,6 +20,7 @@ gem_group :development do
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
+  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier?")
 end
 
 git_add_and_commit "Add development gems"
