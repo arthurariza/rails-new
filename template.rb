@@ -16,11 +16,11 @@ end
 git_add_and_commit "Add development and test gems"
 
 gem_group :development do
-  gem "hotwire-spark" if yes?("Do you want to use hotwire-spark?")
+  gem "hotwire-spark" if yes?("Do you want to use hotwire-spark? (y/n)")
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
-  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier?")
+  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)")
 end
 
 git_add_and_commit "Add development gems"
@@ -70,14 +70,14 @@ after_bundle do
   copy_file File.expand_path("../files/application_service.rb", __FILE__), "app/services/application_service.rb"
   git_add_and_commit "Copy files"
 
-  if yes?("Do you want to use authentication?")
+  if yes?("Do you want to use authentication? (y/n)")
     generate(:authentication)
     route "root to: 'sessions#new'"
     git_add_and_commit "Generate authentication"
     # TODO: Fix error factory_bot [not found] when running `rails g authentication`
   end
 
-  if yes?("Do you want to use Active Storage?")
+  if yes?("Do you want to use Active Storage? (y/n)")
     rails_command "active_storage:install"
     git_add_and_commit "Install Active Storage"
   end
