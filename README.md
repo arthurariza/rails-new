@@ -24,10 +24,11 @@ bin/rails-new
 This template uses the following Rails configuration options:
 
 ```
---database=sqlite3 
---css=tailwind 
---skip-jbuilder 
---skip-spring 
+--database=sqlite3
+--javascript=esbuild
+--css=tailwind
+--skip-jbuilder
+--skip-spring
 --skip-bootsnap
 --skip-test
 ```
@@ -35,6 +36,7 @@ This template uses the following Rails configuration options:
 These options configure your Rails application with:
 - SQLite database
 - Tailwind CSS for styling
+- ESBuild for JavaScript
 - Skips JBuilder
 - Skips Spring application preloader
 - Skips Bootsnap application booter
