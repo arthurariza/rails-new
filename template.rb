@@ -15,13 +15,15 @@ end
 
 git_add_and_commit "Add development and test gems"
 
+ruby_ui = yes?("Do you want to use ruby_ui? (y/n)")
+
 gem_group :development do
   gem "hotwire-spark" if yes?("Do you want to use hotwire-spark? (y/n)")
   gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)")
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
-  gem "ruby_ui", require: false if ruby_ui = yes?("Do you want to use ruby_ui? (y/n)")
+  gem "ruby_ui", require: false if ruby_ui
 end
 
 git_add_and_commit "Add development gems"
