@@ -6,21 +6,22 @@ end
 git_add_and_commit "Initial commit"
 
 gem_group :development, :test do
+  gem "bullet"
+  gem "dotenv-rails"
+  gem "faker"
   gem "rspec-rails"
   gem "factory_bot_rails"
-  gem "faker"
-  gem "dotenv-rails"
-  gem "bullet"
 end
 
 git_add_and_commit "Add development and test gems"
 
 gem_group :development do
   gem "hotwire-spark" if yes?("Do you want to use hotwire-spark? (y/n)")
+  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)")
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
-  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)")
+  gem "ruby_ui", require: false if ruby_ui = yes?("Do you want to use ruby_ui? (y/n)")
 end
 
 git_add_and_commit "Add development gems"
@@ -56,8 +57,13 @@ after_bundle do
 
   git_add_and_commit "Configure FactoryBot and Shoulda Matchers"
 
-  run "bin/rails generate bullet:install"
+  generate "bullet:install"
   git_add_and_commit "Install Bullet"
+
+  if ruby_ui
+    generate "ruby_ui:install"
+    git_add_and_commit "Install Ruby UI"
+  end
 
   # create directories and files
   run "mkdir spec/factories"
