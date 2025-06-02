@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+      args:
+        RUBY_VERSION: '3.4.1'
+    volumes:
+      - .:/app
+    command: rails s -b 0.0.0.0
+    tty: true
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+  
+  js:
+    build:
+      context: .
+      dockerfile: ./Assets.dockerfile
+    stdin_open: true
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: yarn build --watch
+  
+  css:
+    build:
+      context: .
+      dockerfile: ./Assets.dockerfile
+    stdin_open: true
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: yarn build:css --watch
