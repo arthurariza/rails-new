@@ -82,7 +82,7 @@ after_bundle do
     generate(:authentication)
     route "root to: 'sessions#new'"
     git_add_and_commit "Generate authentication"
-    # TODO: Fix error factory_bot [not found] when running `rails g authentication`
+    generate "factory_bot:model user email password"
   end
 
   if yes?("Do you want to use Active Storage? (y/n)")
