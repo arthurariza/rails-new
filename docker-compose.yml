@@ -6,23 +6,26 @@ x-assets: &assets
   volumes:
     - .:/app
     - /app/node_modules
-  
+
+x-rails: &rails
+  build:
+    context: .
+    dockerfile: ./Dockerfile.dev
+    args:
+      RUBY_VERSION: '3.4.1'
+  tty: true
+  stdin_open: true
+  volumes:
+    - .:/app
+
 services:
-  app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.dev
-      args:
-        RUBY_VERSION: '3.4.1'
-    volumes:
-      - .:/app
+  rails:
+    <<: *rails
     command: >
       sh -c "
         rm -f tmp/pids/server.pid
         bin/rails server -b 0.0.0.0 -p 3000
       "
-    tty: true
-    stdin_open: true
     ports:
       - '3000:3000'
     env_file:
