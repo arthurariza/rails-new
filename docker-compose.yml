@@ -1,3 +1,12 @@
+x-assets: &assets
+  build:
+    context: .
+    dockerfile: ./Assets.dockerfile
+  restart: always
+  volumes:
+    - .:/app
+    - /app/node_modules
+  
 services:
   app:
     build:
@@ -20,21 +29,9 @@ services:
       - .env
   
   js:
-    build:
-      context: .
-      dockerfile: ./Assets.dockerfile
-    restart: always
-    volumes:
-      - .:/app
-      - /app/node_modules
+    <<: *assets
     command: yarn build --watch
   
   css:
-    build:
-      context: .
-      dockerfile: ./Assets.dockerfile
-    restart: always
-    volumes:
-      - .:/app
-      - /app/node_modules
+    <<: *assets
     command: yarn build:css --watch
