@@ -7,7 +7,11 @@ services:
         RUBY_VERSION: '3.4.1'
     volumes:
       - .:/app
-    command: rails s -b 0.0.0.0
+    command: >
+      sh -c "
+        rm -f tmp/pids/server.pid
+        bin/rails server -b 0.0.0.0 -p 3000
+      "
     tty: true
     stdin_open: true
     ports:
@@ -19,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: ./Assets.dockerfile
-    stdin_open: true
+    restart: always
     volumes:
       - .:/app
       - /app/node_modules
@@ -29,7 +33,7 @@ services:
     build:
       context: .
       dockerfile: ./Assets.dockerfile
-    stdin_open: true
+    restart: always
     volumes:
       - .:/app
       - /app/node_modules
