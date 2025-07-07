@@ -8,14 +8,12 @@ git_add_and_commit "Initial commit"
 gem_group :development, :test do
   gem "bullet"
   gem "dotenv-rails"
+  gem "factory_bot_rails"
   gem "faker"
   gem "rspec-rails"
-  gem "factory_bot_rails"
 end
 
 git_add_and_commit "Add development and test gems"
-
-ruby_ui = yes?("Do you want to use ruby_ui? (y/n)")
 
 gem_group :development do
   gem "hotwire-spark" if yes?("Do you want to use hotwire-spark? (y/n)")
@@ -23,7 +21,6 @@ gem_group :development do
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
-  gem "ruby_ui", require: false if ruby_ui
 end
 
 git_add_and_commit "Add development gems"
@@ -61,11 +58,6 @@ after_bundle do
 
   generate "bullet:install"
   git_add_and_commit "Install Bullet"
-
-  if ruby_ui
-    generate "ruby_ui:install"
-    git_add_and_commit "Install Ruby UI"
-  end
 
   # create directories and files
   run "mkdir spec/factories"
