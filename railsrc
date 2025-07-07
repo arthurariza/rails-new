@@ -5,3 +5,4 @@
 --skip-spring
 --skip-bootsnap
 --skip-test
+--devcontainer
