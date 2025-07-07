@@ -3,6 +3,7 @@ x-assets: &assets
     context: .
     dockerfile: ./Assets.dockerfile
   restart: always
+  stdin_open: true
   volumes:
     - .:/app
     - /app/node_modules
