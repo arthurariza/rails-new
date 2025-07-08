@@ -7,6 +7,10 @@ def remove_file(file_name)
   run "rm #{file_name}"
 end
 
+def remove_dir(dir_name)
+  run "rm -rf #{dir_name}"
+end
+
 git_add_and_commit "Initial commit"
 
 run "sed -i '' '/^.*#/ d' Gemfile"
@@ -90,7 +94,7 @@ after_bundle do
   end
 
   if yes?("Do you want to remove the template files? (y/n)")
-    remove_file "files/"
+    remove_dir "files/"
     remove_file "railsrc"
     remove_file "template.rb"
     remove_file "bin/rails-new"
