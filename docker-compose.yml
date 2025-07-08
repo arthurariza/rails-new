@@ -21,7 +21,6 @@ x-rails: &rails
   stdin_open: true
   volumes:
     - .:/app
-    - bundle_cache:/usr/local/bundle
     - node_modules_cache:/app/node_modules
 
 services:
@@ -54,5 +53,4 @@ services:
       "
 
 volumes:
-  bundle_cache:
   node_modules_cache:
