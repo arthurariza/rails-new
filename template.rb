@@ -89,9 +89,6 @@ after_bundle do
     git_add_and_commit "Install Active Storage"
   end
 
-  run "rails db:prepare"
-  git_add_and_commit "Prepare database"
-
   if yes?("Do you want to remove the template files? (y/n)")
     remove_file "files/"
     remove_file "railsrc"
@@ -101,6 +98,9 @@ after_bundle do
     git_add_and_commit "Cleanup"
   end
 
-  run "bundle exec rubocop -a"
+  run "bin/rubocop -a"
   git_add_and_commit "Rubocop auto-correct"
+
+  run "bin/rails db:prepare"
+  git_add_and_commit "Prepare database"
 end
