@@ -1,8 +1,7 @@
 --database=sqlite3
---javascript=esbuild
+--javascript=bun
 --css=tailwind
 --skip-jbuilder
 --skip-spring
 --skip-bootsnap
 --skip-test
---devcontainer

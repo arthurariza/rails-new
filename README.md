@@ -25,19 +25,18 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
---javascript=esbuild
+--javascript=bun
 --css=tailwind
 --skip-jbuilder
 --skip-spring
 --skip-bootsnap
 --skip-test
---devcontainer
 ```
 
 These options configure your Rails application with:
 - SQLite database
 - Tailwind CSS for styling
-- ESBuild for JavaScript
+- Bun for JavaScript
 - Skips JBuilder
 - Skips Spring application preloader
 - Skips Bootsnap application booter
@@ -77,7 +76,6 @@ This template installs and configures the following gems:
 - Optional authentication setup
 - Optional Active Storage setup
 - Creates common files like .env and .env.template
-- Creates a .devcontainer directory with a devcontainer.json file
 ## Thanks
 
 Based on [this blog post](https://danielabaron.me/blog/kickstart-a-new-rails-project/#rubocop), [this repository](https://github.com/CodingItWrong/apiup/tree/main), and [official Rails template guide](https://guides.rubyonrails.org/rails_application_templates.html)
