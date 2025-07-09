@@ -28,8 +28,6 @@ This template uses the following Rails configuration options:
 --javascript=bun
 --css=tailwind
 --skip-jbuilder
---skip-spring
---skip-bootsnap
 --skip-test
 ```
 
@@ -38,8 +36,6 @@ These options configure your Rails application with:
 - Tailwind CSS for styling
 - Bun for JavaScript
 - Skips JBuilder
-- Skips Spring application preloader
-- Skips Bootsnap application booter
 - Skips default test framework (uses RSpec instead)
 
 > **Note:** You can customize these options by modifying the `railsrc` file before running the script. Feel free to add or remove options based on your project's specific needs.

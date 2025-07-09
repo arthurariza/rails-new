@@ -2,6 +2,4 @@
 --javascript=bun
 --css=tailwind
 --skip-jbuilder
---skip-spring
---skip-bootsnap
 --skip-test
