@@ -6,7 +6,7 @@ x-bun: &bun
       BUN_VERSION: '1.2.18'
   tty: true
   stdin_open: true
-  restart: on-failure
+  restart: unless-stopped
   volumes:
     - .:/app
     - node_modules_cache:/app/node_modules
