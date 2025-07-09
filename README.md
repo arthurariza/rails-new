@@ -55,6 +55,7 @@ This template installs and configures the following gems:
 ### Development Only
 
 - **hotwire-spark** - (Optional) Hotwire development tools
+- **htmlbeautifier** - (Optional) HTML ERB beautifier
 - **rubocop-rspec** - RSpec specific code style checking
 - **rubocop-thread_safety** - Thread safety code style checking
 - **rubocop-factory_bot** - FactoryBot specific code style checking
