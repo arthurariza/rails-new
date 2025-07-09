@@ -3,7 +3,18 @@ def git_add_and_commit(message)
   git commit: "-m '#{message}'"
 end
 
+def remove_file(file_name)
+  run "rm #{file_name}"
+end
+
+def remove_dir(dir_name)
+  run "rm -rf #{dir_name}"
+end
+
 git_add_and_commit "Initial commit"
+
+run "sed -i '' '/^.*#/ d' Gemfile"
+git_add_and_commit "Remove Gemfile comments"
 
 gem_group :development, :test do
   gem "bullet"
@@ -82,16 +93,18 @@ after_bundle do
     git_add_and_commit "Install Active Storage"
   end
 
-  run "rails db:prepare"
-  git_add_and_commit "Prepare database"
+  if yes?("Do you want to remove the template files? (y/n)")
+    remove_dir "files/"
+    remove_file "railsrc"
+    remove_file "template.rb"
+    remove_file "bin/rails-new"
+    append_to_file ".gitignore", "\n!.env.template\n"
+    git_add_and_commit "Cleanup"
+  end
 
-  run "rm -rf files/"
-  run "rm railsrc"
-  run "rm template.rb"
-  run "rm bin/rails-new"
-  append_to_file ".gitignore", "\n!.env.template\n"
-  git_add_and_commit "Cleanup"
-
-  run "bundle exec rubocop -a"
+  run "bin/rubocop -a"
   git_add_and_commit "Rubocop auto-correct"
+
+  run "bin/rails db:prepare"
+  git_add_and_commit "Prepare database"
 end
