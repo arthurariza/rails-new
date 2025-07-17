@@ -4,7 +4,7 @@ x-app: &app
     dockerfile: ./Dockerfile.dev
     args:
       RUBY_VERSION: '3.4.1'
-      NODE_MAJOR: '22'
+      NODE_MAJOR: '20'
   environment: &env
     NODE_ENV: development
     RAILS_ENV: development
