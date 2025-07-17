@@ -16,6 +16,9 @@ git_add_and_commit "Initial commit"
 run "sed -i '' '/^.*#/ d' Gemfile"
 git_add_and_commit "Remove Gemfile comments"
 
+gem 'vite_rails'
+git_add_and_commit "Add vite_rails gem"
+
 gem_group :development, :test do
   gem "bullet"
   gem "dotenv-rails"
@@ -27,8 +30,7 @@ end
 git_add_and_commit "Add development and test gems"
 
 gem_group :development do
-  gem "hotwire-spark" if yes?("Do you want to use hotwire-spark? (y/n)")
-  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)")
+  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)", :green)
   gem "rubocop-rspec"
   gem "rubocop-thread_safety"
   gem "rubocop-factory_bot"
@@ -47,6 +49,9 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 
 # commands to run after `bundle install`
 after_bundle do
+  run "bundle exec vite install"
+  git_add_and_commit "Install Vite"
+
   # setup RSpec testing
   run "bin/rails generate rspec:install"
   git_add_and_commit "Setup RSpec"
@@ -81,24 +86,26 @@ after_bundle do
   copy_file File.expand_path("../files/application_service.rb", __FILE__), "app/services/application_service.rb"
   git_add_and_commit "Copy files"
 
-  if yes?("Do you want to use authentication? (y/n)")
+  if yes?("Do you want to use authentication? (y/n)", :green)
     generate(:authentication)
     route "root to: 'sessions#new'"
     git_add_and_commit "Generate authentication"
     generate "factory_bot:model user email password"
   end
 
-  if yes?("Do you want to use Active Storage? (y/n)")
+  if yes?("Do you want to use Active Storage? (y/n)", :green)
     rails_command "active_storage:install"
     git_add_and_commit "Install Active Storage"
   end
 
-  if yes?("Do you want to remove the template files? (y/n)")
+  append_to_file ".gitignore", "\n!.env.template\n"
+  git_add_and_commit "Add .env.template to .gitignore"
+
+  if yes?("Do you want to remove the template files? (y/n)", :red)
     remove_dir "files/"
     remove_file "railsrc"
     remove_file "template.rb"
     remove_file "bin/rails-new"
-    append_to_file ".gitignore", "\n!.env.template\n"
     git_add_and_commit "Cleanup"
   end
 
