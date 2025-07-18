@@ -22,8 +22,8 @@ git_add_and_commit "Add vite_rails gem"
 gem_group :development, :test do
   gem "bullet"
   gem "dotenv-rails"
-  gem "factory_bot_rails"
   gem "faker"
+  gem "factory_bot_rails"
   gem "rspec-rails"
 end
 
@@ -31,9 +31,11 @@ git_add_and_commit "Add development and test gems"
 
 gem_group :development do
   gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)", :green)
-  gem "rubocop-rspec"
-  gem "rubocop-thread_safety"
+  gem "rubocop"
   gem "rubocop-factory_bot"
+  gem "rubocop-performance"
+  gem "rubocop-rails"
+  gem "rubocop-thread_safety"
 end
 
 git_add_and_commit "Add development gems"
