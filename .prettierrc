@@ -1,0 +1,12 @@
+{
+  "plugins": ["prettier-plugin-organize-imports"],
+  "semi": true,
+  "singleQuote": false,
+  "printWidth": 120,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "jsxSingleQuote": false,
+  "endOfLine": "lf"
+}
