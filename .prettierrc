@@ -1,5 +1,4 @@
 {
-  "plugins": ["prettier-plugin-organize-imports"],
   "semi": true,
   "singleQuote": false,
   "printWidth": 120,
