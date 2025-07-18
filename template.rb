@@ -55,7 +55,7 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 after_bundle do
   run "bundle exec vite install"
   run "yarn add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
-  insert_into_file "app/views/layouts/application.html.erb","\n<%= vite_stylesheet_tag 'application' %>" , after: "<%= vite_client_tag %>"
+  insert_into_file "app/views/layouts/application.html.erb","\n    <%= vite_stylesheet_tag 'application' %>" , after: "<%= vite_client_tag %>"
   insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
   insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*']),\nStimulusHMR(),\ntailwindcss()," , after: "plugins: ["
   prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload';\n"
@@ -65,6 +65,7 @@ after_bundle do
 
   run "bin/rails turbo:install"
   run "bin/rails stimulus:install"
+  append_to_file "app/frontend/entrypoints/application.js", "import * as Turbo from '@hotwired/turbo'\nTurbo.start();\nimport '../../javascript/controllers'\n"
   git_add_and_commit "Install Turbo and Stimulus"
 
   # setup RSpec testing
