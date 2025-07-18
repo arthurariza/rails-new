@@ -32,12 +32,7 @@ git_add_and_commit "Add development and test gems"
 gem_group :development do
   gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)", :green)
   gem "rubocop", require: false
-  gem "rubocop-factory_bot", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
-  gem "rubocop-rspec_rails", require: false
-  gem "rubocop-thread_safety", require: false
+  gem "rubocop-shopify", require: false
 end
 
 git_add_and_commit "Add development gems"
@@ -54,7 +49,7 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 # commands to run after `bundle install`
 after_bundle do
   generate "inertia:install --framework=react --typescript --vite --tailwind --no-interactive"
-  insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
+  insert_into_file "vite.config.ts","\n  server: {allowedHosts: ['vite']}" , after: "],"
 
   git_add_and_commit "Install InertiaJS"
 
@@ -117,7 +112,7 @@ after_bundle do
   end
 
   run "bundle binstubs rubocop"
-  run "bin/rubocop -a"
+  run "bin/rubocop -A"
   git_add_and_commit "Rubocop auto-correct"
 
   run "bin/rails db:prepare"
