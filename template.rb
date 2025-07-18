@@ -49,9 +49,9 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 # commands to run after `bundle install`
 after_bundle do
   generate "inertia:install --framework=react --typescript --vite --tailwind --no-interactive"
-  insert_into_file "vite.config.ts","\n  server: {allowedHosts: ['vite']}" , after: "],"
+  insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
   run "yarn add -D vite-plugin-full-reload"
-  insert_into_file "vite.config.ts","\n    fullReload(['config/routes.rb', 'app/views/**/*'],{delay:2000})," , after: "plugins: ["
+  insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*'],{delay:2000})," , after: "plugins: ["
   prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload'\n"
   git_add_and_commit "Install InertiaJS"
 
@@ -112,10 +112,10 @@ after_bundle do
   run "yarn prettier --write . || true"
   git_add_and_commit "Prettier auto-correct"
 
-  run "bin/rails db:prepare"
-  git_add_and_commit "Prepare database"
-
   run "bundle binstubs rubocop"
   run "bin/rubocop -a || true"
   git_add_and_commit "Rubocop auto-correct"
+
+  run "bin/rails db:prepare"
+  git_add_and_commit "Prepare database"
 end
