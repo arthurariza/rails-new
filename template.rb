@@ -103,7 +103,6 @@ after_bundle do
   git_add_and_commit "Add .env.template to .gitignore"
 
   if yes?("Do you want to remove the template files? (y/n)", :red)
-    remove_dir "files/"
     remove_file "railsrc"
     remove_file "template.rb"
     remove_file "bin/rails-new"
