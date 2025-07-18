@@ -109,13 +109,13 @@ after_bundle do
     git_add_and_commit "Cleanup"
   end
 
-  run "bundle binstubs rubocop"
-  run "bin/rubocop -A", allow_failure: true
-  git_add_and_commit "Rubocop auto-correct"
-
-  run "yarn prettier --write .", allow_failure: true
+  run "yarn prettier --write ."
   git_add_and_commit "Prettier auto-correct"
 
   run "bin/rails db:prepare"
   git_add_and_commit "Prepare database"
+
+  run "bundle binstubs rubocop"
+  run "bin/rubocop -A"
+  git_add_and_commit "Rubocop auto-correct"
 end
