@@ -113,7 +113,7 @@ after_bundle do
   run "bin/rubocop -A", allow_failure: true
   git_add_and_commit "Rubocop auto-correct"
 
-  run "yarn prettier --write ."
+  run "yarn prettier --write .", allow_failure: true
   git_add_and_commit "Prettier auto-correct"
 
   run "bin/rails db:prepare"
