@@ -16,7 +16,12 @@ git_add_and_commit "Initial commit"
 run "sed -i '' '/^.*#/ d' Gemfile"
 git_add_and_commit "Remove Gemfile comments"
 
-gem 'vite_rails'
+gem "turbo-rails"
+gem "stimulus-rails"
+git_add_and_commit "Add turbo-rails and stimulus-rails gems"
+
+
+gem "vite_rails"
 git_add_and_commit "Add vite_rails gem"
 
 gem_group :development, :test do
@@ -57,6 +62,10 @@ after_bundle do
   prepend_to_file "vite.config.ts", "import StimulusHMR from 'vite-plugin-stimulus-hmr';\n"
   prepend_to_file "vite.config.ts", "import tailwindcss from '@tailwindcss/vite';\n"
   git_add_and_commit "Install Vite, Plugins and Tailwind"
+
+  run "bin/rails turbo:install"
+  run "bin/rails stimulus:install"
+  git_add_and_commit "Install Turbo and Stimulus"
 
   # setup RSpec testing
   run "bin/rails generate rspec:install"

@@ -1,5 +1,5 @@
 --database=sqlite3
---javascript=esbuild
+--skip-javascript
 --skip-asset-pipeline
 --skip-jbuilder
 --skip-test
