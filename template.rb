@@ -50,8 +50,13 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 after_bundle do
   generate "inertia:install --framework=react --typescript --vite --tailwind --no-interactive"
   insert_into_file "vite.config.ts","\n  server: {allowedHosts: ['vite']}" , after: "],"
-
+  run "yarn add -D vite-plugin-full-reload"
+  insert_into_file "vite.config.ts","\n  fullReload(['config/routes.rb', 'app/views/**/*'])," , after: "plugins: ["
+  append_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload'\n"
   git_add_and_commit "Install InertiaJS"
+
+  run "yarn add -D prettier-plugin-organize-imports prettier"
+
 
   # setup RSpec testing
   run "bin/rails generate rspec:install"
@@ -78,20 +83,14 @@ after_bundle do
 
   # create directories and files
   run "mkdir spec/factories"
-  run "mkdir app/services"
-  run "touch app/services/.keep .rubocop.yml .env .env.template"
+  run "touch app/services/.keep"
   git_add_and_commit "Create directories and files"
-
-  # copy new files that should always be in project
-  copy_file File.expand_path("../files/.rubocop.yml", __FILE__), ".rubocop.yml"
-  copy_file File.expand_path("../files/application_service.rb", __FILE__), "app/services/application_service.rb"
-  git_add_and_commit "Copy files"
 
   if yes?("Do you want to use authentication? (y/n)", :green)
     generate(:authentication)
     route "root to: 'sessions#new'"
-    git_add_and_commit "Generate authentication"
     generate "factory_bot:model user email password"
+    git_add_and_commit "Generate authentication"
   end
 
   if yes?("Do you want to use Active Storage? (y/n)", :green)
