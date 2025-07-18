@@ -51,7 +51,7 @@ after_bundle do
   generate "inertia:install --framework=react --typescript --vite --tailwind --no-interactive"
   insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
   run "yarn add -D vite-plugin-full-reload"
-  insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*'],{delay:2000})," , after: "plugins: ["
+  insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*'])," , after: "plugins: ["
   prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload'\n"
   git_add_and_commit "Install InertiaJS"
 
