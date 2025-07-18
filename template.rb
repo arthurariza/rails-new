@@ -16,8 +16,8 @@ git_add_and_commit "Initial commit"
 run "sed -i '' '/^.*#/ d' Gemfile"
 git_add_and_commit "Remove Gemfile comments"
 
-gem 'vite_rails'
-git_add_and_commit "Add vite_rails gem"
+gem 'inertia_rails'
+git_add_and_commit "Add inertia_rails gem"
 
 gem_group :development, :test do
   gem "bullet"
@@ -51,11 +51,10 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 
 # commands to run after `bundle install`
 after_bundle do
-  run "bundle exec vite install"
-  run "yarn add -D vite-plugin-full-reload"
-  copy_file File.expand_path("../files/vite.config.ts", __FILE__), "vite.config.ts"
-  append_to_file "app/assets/stylesheets/application.css", "@import 'tailwindcss';"
-  git_add_and_commit "Install Vite and TailwindCSS"
+  generate "inertia:install --framework=react --typescript --vite --tailwind --no-interactive"
+  insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
+
+  git_add_and_commit "Install InertiaJS"
 
   # setup RSpec testing
   run "bin/rails generate rspec:install"
