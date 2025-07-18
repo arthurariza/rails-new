@@ -1,5 +1,7 @@
 class ApplicationService
-  def self.call(...)
-    new(...).call
+  class << self
+    def call(...)
+      new(...).call
+    end
   end
 end
