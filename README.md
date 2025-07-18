@@ -1,6 +1,6 @@
-# Rails 8 + Inertia.js App Creator
+# Rails 8 + Vite Ruby App Creator
 
-A template for creating new Rails applications with Inertia.js and a pre-configured set of gems and tools.
+A template for creating new Rails applications with Vite and a pre-configured set of gems and tools.
 
 ## Usage
 Create a new directory with the name of your project and change directory into it.
@@ -25,10 +25,6 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
---skip-asset-pipeline
---skip-javascript
---skip-hotwire
---skip-assets
 --skip-jbuilder
 --skip-test
 --skip-rubocop

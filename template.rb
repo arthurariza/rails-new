@@ -16,8 +16,8 @@ git_add_and_commit "Initial commit"
 run "sed -i '' '/^.*#/ d' Gemfile"
 git_add_and_commit "Remove Gemfile comments"
 
-gem 'inertia_rails'
-git_add_and_commit "Add inertia_rails gem"
+gem 'vite_rails'
+git_add_and_commit "Add vite_rails gem"
 
 gem_group :development, :test do
   gem "bullet"
@@ -48,15 +48,14 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 
 # commands to run after `bundle install`
 after_bundle do
-  generate "inertia:install --framework=react --typescript --vite --tailwind --no-interactive"
+  run "bundle exec vite install"
+  run "yarn add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier-plugin-organize-imports prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
   insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
-  run "yarn add -D vite-plugin-full-reload"
-  insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*'])," , after: "plugins: ["
-  prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload'\n"
-  git_add_and_commit "Install InertiaJS"
-
-  run "yarn add -D prettier-plugin-organize-imports prettier"
-
+  insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*']),\nStimulusHMR(),\ntailwindcss()," , after: "plugins: ["
+  prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload';\n"
+  prepend_to_file "vite.config.ts", "import StimulusHMR from 'vite-plugin-stimulus-hmr';\n"
+  prepend_to_file "vite.config.ts", "import tailwindcss from '@tailwindcss/vite';\n"
+  git_add_and_commit "Install Vite, Plugins and Tailwind"
 
   # setup RSpec testing
   run "bin/rails generate rspec:install"
