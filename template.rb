@@ -51,6 +51,7 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 after_bundle do
   run "bundle exec vite install"
   run "yarn add -D vite-plugin-full-reload"
+  copy_file File.expand_path("../files/vite.config.ts", __FILE__), "vite.config.ts"
   append_to_file "app/assets/stylesheets/application.css", "@import 'tailwindcss';"
   git_add_and_commit "Install Vite and TailwindCSS"
 
@@ -86,7 +87,6 @@ after_bundle do
   # copy new files that should always be in project
   copy_file File.expand_path("../files/.rubocop.yml", __FILE__), ".rubocop.yml"
   copy_file File.expand_path("../files/application_service.rb", __FILE__), "app/services/application_service.rb"
-  copy_file File.expand_path("../files/vite.config.ts", __FILE__), "vite.config.ts"
   git_add_and_commit "Copy files"
 
   if yes?("Do you want to use authentication? (y/n)", :green)
