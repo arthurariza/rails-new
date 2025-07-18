@@ -1,6 +1,6 @@
-# Rails 8+ App Creator
+# Rails 8 + Inertia.js App Creator
 
-A template for creating new Rails applications with a pre-configured set of gems and tools.
+A template for creating new Rails applications with Inertia.js and a pre-configured set of gems and tools.
 
 ## Usage
 Create a new directory with the name of your project and change directory into it.
@@ -25,24 +25,29 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
---javascript=bun
---css=tailwind
+--skip-asset-pipeline
+--skip-javascript
+--skip-hotwire
+--skip-assets
 --skip-jbuilder
 --skip-test
+--skip-rubocop
 ```
 
 These options configure your Rails application with:
 - SQLite database
 - Tailwind CSS for styling
-- Bun for JavaScript
+- Vite as the JavaScript and asset bundler
+- Inertia.js for modern SPA-like navigation
+- TypeScript and Prettier for improved developer experience
 - Skips JBuilder
 - Skips default test framework (uses RSpec instead)
 
 > **Note:** You can customize these options by modifying the `railsrc` file before running the script. Feel free to add or remove options based on your project's specific needs.
 
-## Included Gems
+## Included Gems & Tools
 
-This template installs and configures the following gems:
+This template installs and configures the following gems and tools:
 
 ### Development & Test
 
@@ -54,11 +59,13 @@ This template installs and configures the following gems:
 
 ### Development Only
 
-- **hotwire-spark** - (Optional) Hotwire development tools
+- **vite_rails** - Integrates Vite for asset bundling
+- **inertia_rails** - Inertia.js adapter for Rails
+- **typescript** - TypeScript support via Vite
+- **prettier** - Code formatter for JavaScript/TypeScript
 - **htmlbeautifier** - (Optional) HTML ERB beautifier
-- **rubocop-rspec** - RSpec specific code style checking
-- **rubocop-thread_safety** - Thread safety code style checking
-- **rubocop-factory_bot** - FactoryBot specific code style checking
+- **rubocop** - Ruby linter, configured with Shopify rules
+- **rubocop-shopify** - Shopify specific code style checking
 
 ### Test Only
 
@@ -66,16 +73,18 @@ This template installs and configures the following gems:
 
 ## Features
 
+- Vite-powered frontend with TypeScript and Prettier
+- Inertia.js for SPA-like navigation
 - Configures RSpec with FactoryBot and Shoulda Matchers
 - Sets up Bullet for N+1 query detection
 - Creates a services directory with Rails autoloading
-- Includes a pre-configured Rubocop setup
+- Includes a pre-configured Rubocop setup using Shopify rules
 - Optional authentication setup
 - Optional Active Storage setup
 - Creates common files like .env and .env.template
 ## Thanks
 
-Based on [this blog post](https://danielabaron.me/blog/kickstart-a-new-rails-project/#rubocop), [this repository](https://github.com/CodingItWrong/apiup/tree/main), and [official Rails template guide](https://guides.rubyonrails.org/rails_application_templates.html)
+Based on [this blog post](https://danielabaron.me/blog/kickstart-a-new-rails-project/#rubocop), [this repository](https://github.com/CodingItWrong/apiup/tree/main), [official Rails template guide](https://guides.rubyonrails.org/rails_application_templates.html), and [Ruby On Whales](https://github.com/evilmartians/ruby-on-whales)
 
 ## License
 

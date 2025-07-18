@@ -38,7 +38,7 @@ end
 git_add_and_commit "Add development gems"
 
 gem_group :test do
-  gem "shoulda-matchers"
+  gem "shoulda-matchers", require: false
 end
 
 git_add_and_commit "Add test gems"
