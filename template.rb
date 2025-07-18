@@ -116,6 +116,7 @@ after_bundle do
     git_add_and_commit "Cleanup"
   end
 
+  run "bundle binstubs rubocop"
   run "bin/rubocop -a"
   git_add_and_commit "Rubocop auto-correct"
 
