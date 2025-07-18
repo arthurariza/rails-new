@@ -2,6 +2,7 @@ plugins:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+  - rubocop-rspec_rails
   - rubocop-thread_safety
   - rubocop-factory_bot
 
@@ -19,3 +20,13 @@ AllCops:
     - 'config/environments/development.rb'
     - 'config/environments/production.rb'
     - 'spec/spec_helper.rb'
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  Include:
+    - "app/**/*"
+    - "config/**/*"
+    - "lib/**/*"
+    - "test/**/*"
+    - "Gemfile"
