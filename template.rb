@@ -52,7 +52,7 @@ after_bundle do
   insert_into_file "vite.config.ts","\n  server: {allowedHosts: ['vite']}" , after: "],"
   run "yarn add -D vite-plugin-full-reload"
   insert_into_file "vite.config.ts","\n    fullReload(['config/routes.rb', 'app/views/**/*'])," , after: "plugins: ["
-  append_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload'\n"
+  prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload'\n"
   git_add_and_commit "Install InertiaJS"
 
   run "yarn add -D prettier-plugin-organize-imports prettier"
