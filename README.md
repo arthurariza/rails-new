@@ -25,6 +25,8 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
+--skip-javascript
+--skip-asset-pipeline
 --skip-jbuilder
 --skip-test
 --skip-rubocop
@@ -33,9 +35,7 @@ This template uses the following Rails configuration options:
 These options configure your Rails application with:
 - SQLite database
 - Tailwind CSS for styling
-- Vite as the JavaScript and asset bundler
-- Inertia.js for modern SPA-like navigation
-- TypeScript and Prettier for improved developer experience
+- Vite as the JavaScript and asset bundler with Hot Module Reload
 - Skips JBuilder
 - Skips default test framework (uses RSpec instead)
 
@@ -56,8 +56,6 @@ This template installs and configures the following gems and tools:
 ### Development Only
 
 - **vite_rails** - Integrates Vite for asset bundling
-- **inertia_rails** - Inertia.js adapter for Rails
-- **typescript** - TypeScript support via Vite
 - **prettier** - Code formatter for JavaScript/TypeScript
 - **htmlbeautifier** - (Optional) HTML ERB beautifier
 - **rubocop** - Ruby linter, configured with Shopify rules
@@ -69,8 +67,8 @@ This template installs and configures the following gems and tools:
 
 ## Features
 
-- Vite-powered frontend with TypeScript and Prettier
-- Inertia.js for SPA-like navigation
+- Vite-powered frontend with Hot Module Reload
+- TailwindCSS for styles
 - Configures RSpec with FactoryBot and Shoulda Matchers
 - Sets up Bullet for N+1 query detection
 - Creates a services directory with Rails autoloading
