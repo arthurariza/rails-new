@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+docker build -f Build.dockerfile -t rails-new:build .
+
+docker run --rm -it rails-new:build bin/rails new
