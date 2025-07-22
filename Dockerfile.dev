@@ -31,8 +31,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends nodejs
     
 # Yarn
-ARG YARN_VERSION=latest
-RUN npm install -g yarn@$YARN_VERSION
+ARG PNPM_VERSION=latest
+RUN npm install -g pnpm@$PNPM_VERSION
 
 # Configure bundler
 ENV LANG=C.UTF-8 \
