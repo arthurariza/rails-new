@@ -1,37 +1,44 @@
-x-app: &app
+x-bun: &bun
+  build:
+    context: .
+    dockerfile: ./Bun.dockerfile
+    args:
+      BUN_VERSION: '1.2.18'
+  tty: true
+  stdin_open: true
+  restart: unless-stopped
+  volumes:
+    - .:/app
+    - node_modules:/app/node_modules
+    - vite_dev:/app/public/vite-dev
+    - vite_test:/app/public/vite-test 
+
+x-ruby: &ruby
   build:
     context: .
     dockerfile: ./Dockerfile.dev
     args:
       RUBY_VERSION: '3.4.1'
-  environment: &env
+  environment:
     RAILS_ENV: development
+    HISTFILE: /usr/local/hist/.bash_history
+    IRB_HISTFILE: /usr/local/hist/.irb_history
+    EDITOR: vi
+    VITE_RUBY_HOST: vite
   tmpfs:
     - /tmp
     - /app/tmp/pids
-
-x-backend: &backend
-  <<: *app
   stdin_open: true
   tty: true
   volumes:
     - .:/app
     - bundle:/usr/local/bundle
     - rails_cache:/app/tmp/cache
-    - node_modules:/app/node_modules
     - history:/usr/local/hist
-    - vite_dev:/app/public/vite-dev
-    - vite_test:/app/public/vite-test    
-  environment: &backend_environment
-    <<: *env
-    HISTFILE: /usr/local/hist/.bash_history
-    IRB_HISTFILE: /usr/local/hist/.irb_history
-    EDITOR: vi
-    VITE_RUBY_HOST: vite
-    
+
 services:
   rails:
-    <<: *backend
+    <<: *ruby
     command: >
       sh -c "
         rm -f tmp/pids/server.pid
@@ -48,7 +55,7 @@ services:
       - .env
 
   bundler:
-    <<: *backend
+    <<: *ruby
     command: >
       bash -c "
         echo 'Running bundler...';
@@ -60,11 +67,11 @@ services:
       - bundle:/usr/local/bundle
 
   vite:
-    <<: *backend
+    <<: *bun
     command: >
       sh -c "
         bun install
-        ./bin/vite dev
+        bun vite dev
       "
     depends_on:
       bundler:
@@ -74,7 +81,6 @@ services:
       VITE_RUBY_HOST: 0.0.0.0
     volumes:
       - .:/app
-      - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
       - vite_dev:/app/public/vite-dev
       - vite_test:/app/public/vite-test
