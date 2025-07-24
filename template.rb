@@ -13,9 +13,6 @@ end
 
 git_add_and_commit "Initial commit"
 
-run "sed -i '' '/^.*#/ d' Gemfile"
-git_add_and_commit "Remove Gemfile comments"
-
 gem "turbo-rails"
 gem "stimulus-rails"
 git_add_and_commit "Add turbo-rails and stimulus-rails gems"
