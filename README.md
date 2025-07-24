@@ -1,6 +1,6 @@
-# Rails 8 + Vite Ruby App Creator
+# Rails 8 + Bun + Vite + Docker App Creator
 
-A template for creating new Rails applications with Vite and a pre-configured set of gems and tools.
+A template for creating new Rails applications with Bun, Vite and Docker and a pre-configured set of gems and tools.
 
 ## Usage
 Create a new directory with the name of your project and change directory into it.
@@ -14,7 +14,11 @@ Clone this repository into the directory
 git clone git@github.com:arthurariza/rails-new.git .
 ```
 
-Run the script
+Run the script (with Docker)
+```
+bin/rails-new-docker
+```
+Run the script (without Docker)
 ```
 bin/rails-new
 ```
@@ -25,8 +29,7 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
---skip-javascript
---skip-asset-pipeline
+--javascript=bun
 --skip-jbuilder
 --skip-test
 --skip-rubocop
@@ -34,10 +37,11 @@ This template uses the following Rails configuration options:
 
 These options configure your Rails application with:
 - SQLite database
-- Tailwind CSS for styling
+- Bun as the JavaScript runtime
 - Vite as the JavaScript and asset bundler with Hot Module Reload
 - Skips JBuilder
 - Skips default test framework (uses RSpec instead)
+- Skips Rubocop
 
 > **Note:** You can customize these options by modifying the `railsrc` file before running the script. Feel free to add or remove options based on your project's specific needs.
 
