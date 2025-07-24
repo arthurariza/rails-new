@@ -4,9 +4,7 @@ x-app: &app
     dockerfile: ./Dockerfile.dev
     args:
       RUBY_VERSION: '3.4.1'
-      NODE_MAJOR: '20'
   environment: &env
-    NODE_ENV: development
     RAILS_ENV: development
   tmpfs:
     - /tmp
@@ -26,7 +24,6 @@ x-backend: &backend
     - vite_test:/app/public/vite-test    
   environment: &backend_environment
     <<: *env
-    YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
     HISTFILE: /usr/local/hist/.bash_history
     IRB_HISTFILE: /usr/local/hist/.irb_history
     EDITOR: vi
@@ -66,7 +63,7 @@ services:
     <<: *backend
     command: >
       sh -c "
-        yarn install
+        bun install
         ./bin/vite dev
       "
     depends_on:
@@ -75,7 +72,6 @@ services:
     environment:
       DEBUG: '*vite*'
       VITE_RUBY_HOST: 0.0.0.0
-      YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
     volumes:
       - .:/app
       - bundle:/usr/local/bundle

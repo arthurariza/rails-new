@@ -1,6 +1,5 @@
 --database=sqlite3
---skip-javascript
---skip-asset-pipeline
+--javascript=bun
 --skip-jbuilder
 --skip-test
 --skip-rubocop

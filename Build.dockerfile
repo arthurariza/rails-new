@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
 ARG RUBY_VERSION=3.4.1
+ARG BUN_VERSION=latest
+FROM oven/bun:$BUN_VERSION AS bun-source
 FROM ruby:$RUBY_VERSION-slim-bookworm
 
 # Common dependencies
@@ -18,27 +20,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     less \
     git
 
-# Node
-ARG NODE_MAJOR=20
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-    --mount=type=tmpfs,target=/var/log \
-    apt-get update && \
-    apt-get install -y curl software-properties-common && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-    echo "deb https://deb.nodesource.com/node_${NODE_MAJOR}.x $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/nodesource.list && \
-    apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends nodejs
-    
-# Yarn
-ARG YARN_VERSION=latest
-RUN npm install -g yarn@$YARN_VERSION
+COPY --from=bun-source /usr/local/bin/bun /usr/local/bin/
+
+WORKDIR /app
 
 # Rails
 RUN gem install rails
 
 # Create a directory for the app code
-WORKDIR /app
 COPY . /app
 
 CMD ["/bin/bash"]

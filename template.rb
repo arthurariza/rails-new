@@ -51,18 +51,16 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 # commands to run after `bundle install`
 after_bundle do
   run "bundle exec vite install"
-  run "yarn add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
+  run "bun add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
   insert_into_file "app/views/layouts/application.html.erb","\n    <%= vite_stylesheet_tag 'application' %>" , after: "<%= vite_client_tag %>"
-  insert_into_file "vite.config.ts","\nserver: {allowedHosts: ['vite']}" , after: "],"
-  insert_into_file "vite.config.ts","\nFullReload(['config/routes.rb', 'app/views/**/*']),\nStimulusHMR(),\ntailwindcss()," , after: "plugins: ["
-  prepend_to_file "vite.config.ts", "import FullReload from 'vite-plugin-full-reload';\n"
-  prepend_to_file "vite.config.ts", "import StimulusHMR from 'vite-plugin-stimulus-hmr';\n"
-  prepend_to_file "vite.config.ts", "import tailwindcss from '@tailwindcss/vite';\n"
+  insert_into_file "vite.config.mts","\nserver: {allowedHosts: ['vite']}" , after: "],"
+  insert_into_file "vite.config.mts","\nFullReload(['config/routes.rb', 'app/views/**/*']),\nStimulusHMR(),\ntailwindcss()," , after: "plugins: ["
+  prepend_to_file "vite.config.mts", "import FullReload from 'vite-plugin-full-reload';\n"
+  prepend_to_file "vite.config.mts", "import StimulusHMR from 'vite-plugin-stimulus-hmr';\n"
+  prepend_to_file "vite.config.mts", "import tailwindcss from '@tailwindcss/vite';\n"
   git_add_and_commit "Install Vite, Plugins and Tailwind"
 
-  run "bin/rails turbo:install"
-  run "bin/rails stimulus:install"
-  append_to_file "app/frontend/entrypoints/application.js", "import * as Turbo from '@hotwired/turbo'\nTurbo.start();\nimport '../../javascript/controllers'\n"
+  append_to_file "app/javascript/entrypoints/application.js", "import * as Turbo from '@hotwired/turbo'\nTurbo.start();\nimport '../controllers'\n"
   git_add_and_commit "Install Turbo and Stimulus"
 
   # setup RSpec testing
@@ -106,13 +104,14 @@ after_bundle do
   end
 
   append_to_file ".gitignore", "\n!.env.template\n"
-  remove_file "package-lock.json"
   git_add_and_commit "Add .env.template to .gitignore"
 
   if yes?("Do you want to remove the template files? (y/n)", :red)
     remove_file "railsrc"
     remove_file "template.rb"
+    remove_file "Build.dockerfile"
     remove_file "bin/rails-new"
+    remove_file "bin/rails-new-docker"
     git_add_and_commit "Cleanup"
   end
 
