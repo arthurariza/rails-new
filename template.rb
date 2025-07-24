@@ -13,11 +13,6 @@ end
 
 git_add_and_commit "Initial commit"
 
-gem "turbo-rails"
-gem "stimulus-rails"
-git_add_and_commit "Add turbo-rails and stimulus-rails gems"
-
-
 gem "vite_rails"
 git_add_and_commit "Add vite_rails gem"
 
@@ -115,7 +110,7 @@ after_bundle do
     git_add_and_commit "Cleanup"
   end
 
-  run "yarn prettier --write . || true"
+  run "bun prettier --write . || true"
   git_add_and_commit "Prettier auto-correct"
 
   run "bundle binstubs rubocop"
