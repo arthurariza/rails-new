@@ -19,6 +19,9 @@ git_add_and_commit "Add vite_rails gem"
 gem "pundit"
 git_add_and_commit "Add pundit gem"
 
+gem "pagy"
+git_add_and_commit "Add pagy gem"
+
 gem_group :development, :test do
   gem "bullet"
   gem "dotenv-rails"
@@ -75,17 +78,21 @@ after_bundle do
 
   append_to_file "spec/rails_helper.rb" do
     "\nShoulda::Matchers.configure do |config|\n" +
-    "  config.integrate do |with|\n" +
-    "    with.test_framework :rspec\n" +
-    "    with.library :rails\n" +
-    "  end\n" +
-    "end\n"
+      "  config.integrate do |with|\n" +
+      "    with.test_framework :rspec\n" +
+      "    with.library :rails\n" +
+      "  end\n" +
+      "end\n"
   end
 
   git_add_and_commit "Configure FactoryBot and Shoulda Matchers"
 
   generate "pundit:install"
   git_add_and_commit "Install Pundit"
+
+  insert_into_file "app/controllers/application_controller.rb", "\n  include Pagy::Backend", after: "ActionController::Base"
+  insert_into_file "app/helpers/application_helper.rb", "\n  include Pagy::Frontend", after: "ApplicationHelper"
+  git_add_and_commit "Install Pagy"
 
   generate "bullet:install"
   git_add_and_commit "Install Bullet"
