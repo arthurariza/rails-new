@@ -16,6 +16,9 @@ git_add_and_commit "Initial commit"
 gem "vite_rails"
 git_add_and_commit "Add vite_rails gem"
 
+gem "pundit"
+git_add_and_commit "Add pundit gem"
+
 gem_group :development, :test do
   gem "bullet"
   gem "dotenv-rails"
@@ -80,6 +83,9 @@ after_bundle do
   end
 
   git_add_and_commit "Configure FactoryBot and Shoulda Matchers"
+
+  generate "pundit:install"
+  git_add_and_commit "Install Pundit"
 
   generate "bullet:install"
   git_add_and_commit "Install Bullet"
