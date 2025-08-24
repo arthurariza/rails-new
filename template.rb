@@ -25,9 +25,6 @@ git_add_and_commit "Add pagy gem"
 gem_group :development, :test do
   gem "bullet"
   gem "dotenv-rails"
-  gem "faker"
-  gem "factory_bot_rails"
-  gem "rspec-rails"
 end
 
 git_add_and_commit "Add development and test gems"
@@ -39,10 +36,6 @@ gem_group :development do
 end
 
 git_add_and_commit "Add development gems"
-
-gem_group :test do
-  gem "shoulda-matchers", require: false
-end
 
 git_add_and_commit "Add test gems"
 
@@ -67,26 +60,6 @@ after_bundle do
   append_to_file "app/javascript/entrypoints/application.js", "import * as Turbo from '@hotwired/turbo'\nTurbo.start();\nimport '../controllers'\n"
   git_add_and_commit "Install Turbo and Stimulus"
 
-  # setup RSpec testing
-  run "bin/rails generate rspec:install"
-  git_add_and_commit "Setup RSpec"
-
-  # Configure FactoryBot and Shoulda Matchers in rails_helper.rb
-  insert_into_file "spec/rails_helper.rb", after: "RSpec.configure do |config|\n" do
-    "  config.include FactoryBot::Syntax::Methods\n"
-  end
-
-  append_to_file "spec/rails_helper.rb" do
-    "\nShoulda::Matchers.configure do |config|\n" +
-      "  config.integrate do |with|\n" +
-      "    with.test_framework :rspec\n" +
-      "    with.library :rails\n" +
-      "  end\n" +
-      "end\n"
-  end
-
-  git_add_and_commit "Configure FactoryBot and Shoulda Matchers"
-
   generate "pundit:install"
   git_add_and_commit "Install Pundit"
 
@@ -105,7 +78,6 @@ after_bundle do
   if yes?("Do you want to use authentication? (y/n)", :green)
     generate(:authentication)
     route "root to: 'sessions#new'"
-    generate "factory_bot:model user email password"
     git_add_and_commit "Generate authentication"
   end
 
