@@ -37,8 +37,6 @@ end
 
 git_add_and_commit "Add development gems"
 
-git_add_and_commit "Add test gems"
-
 # adds lines to `config/application.rb`
 environment 'config.autoload_paths << Rails.root.join("services")'
 
