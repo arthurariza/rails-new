@@ -70,7 +70,7 @@ services:
       - bundle:/usr/local/bundle
 
   vite:
-    <<: *bun
+    <<: *ruby
     command: >
       sh -c "
         yarn install
