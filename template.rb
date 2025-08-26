@@ -47,7 +47,7 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 # commands to run after `bundle install`
 after_bundle do
   run "bundle exec vite install"
-  run "bun add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
+  run "yarn add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
   insert_into_file "app/views/layouts/application.html.erb","\n    <%= vite_stylesheet_tag 'application' %>" , after: "<%= vite_client_tag %>"
   gsub_file "app/views/layouts/application.html.erb",'<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>' , ""
   gsub_file "app/views/layouts/application.html.erb",'<%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>' , ""
@@ -72,11 +72,6 @@ after_bundle do
   generate "bullet:install"
   git_add_and_commit "Install Bullet"
 
-  # create directories and files
-  run "mkdir spec/factories"
-  run "touch app/services/.keep"
-  git_add_and_commit "Create directories and files"
-
   if yes?("Do you want to use authentication? (y/n)", :green)
     generate(:authentication)
     route "root to: 'sessions#new'"
@@ -94,17 +89,16 @@ after_bundle do
   if yes?("Do you want to remove the template files? (y/n)", :red)
     remove_file "railsrc"
     remove_file "template.rb"
-    remove_file "Build.dockerfile"
     remove_file "bin/rails-new"
     remove_file "bin/rails-new-docker"
     git_add_and_commit "Cleanup"
   end
 
-  run "bun prettier --write . || true"
+  run "yarn prettier --write . || true"
   git_add_and_commit "Prettier auto-correct"
 
   run "bundle binstubs rubocop"
-  run "bin/rubocop -a || true"
+  run "bin/rubocop -A || true"
   git_add_and_commit "Rubocop auto-correct"
 
   run "bin/rails db:prepare"
