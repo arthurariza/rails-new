@@ -32,7 +32,11 @@ git_add_and_commit "Add development and test gems"
 gem_group :development do
   gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)", :green)
   gem "rubocop", require: false
-  gem "rubocop-shopify", require: false
+  gem "rubocop-capybara", require: false
+  gem "rubocop-minitest", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-thread_safety", require: false
 end
 
 git_add_and_commit "Add development gems"
