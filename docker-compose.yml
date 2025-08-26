@@ -1,17 +1,17 @@
-x-bun: &bun
-  build:
-    context: .
-    dockerfile: ./Bun.dockerfile
-    args:
-      BUN_VERSION: '1.2.18'
-  tty: true
-  stdin_open: true
-  restart: unless-stopped
-  volumes:
-    - .:/app
-    - node_modules:/app/node_modules
-    - vite_dev:/app/public/vite-dev
-    - vite_test:/app/public/vite-test 
+# x-bun: &bun
+#   build:
+#     context: .
+#     dockerfile: ./Bun.dockerfile
+#     args:
+#       BUN_VERSION: '1.2.18'
+#   tty: true
+#   stdin_open: true
+#   restart: unless-stopped
+#   volumes:
+#     - .:/app
+#     - node_modules:/app/node_modules
+#     - vite_dev:/app/public/vite-dev
+#     - vite_test:/app/public/vite-test 
 
 x-ruby: &ruby
   build:
@@ -19,12 +19,15 @@ x-ruby: &ruby
     dockerfile: ./Dockerfile.dev
     args:
       RUBY_VERSION: '3.4.1'
+      NODE_MAJOR: '22'
   environment:
     RAILS_ENV: development
+    NODE_ENV: development
     HISTFILE: /usr/local/hist/.bash_history
     IRB_HISTFILE: /usr/local/hist/.irb_history
     EDITOR: vi
     VITE_RUBY_HOST: vite
+    YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
   tmpfs:
     - /tmp
     - /app/tmp/pids
@@ -70,8 +73,8 @@ services:
     <<: *bun
     command: >
       sh -c "
-        bun install
-        bun vite dev
+        yarn install
+        ./bin/vite dev
       "
     depends_on:
       bundler:
@@ -79,8 +82,10 @@ services:
     environment:
       DEBUG: '*vite*'
       VITE_RUBY_HOST: 0.0.0.0
+      YARN_CACHE_FOLDER: /app/node_modules/.yarn-cache
     volumes:
       - .:/app
+      - bundle:/usr/local/bundle
       - node_modules:/app/node_modules
       - vite_dev:/app/public/vite-dev
       - vite_test:/app/public/vite-test
