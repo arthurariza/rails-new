@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-docker build --no-cache -f Dockerfile.dev -t rails-new:build .
+docker build --no-cache -f Build.dockerfile -t rails-new:build .
 
 docker run --rm -it \
   -v "$PWD":/app \

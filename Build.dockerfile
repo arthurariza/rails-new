@@ -49,8 +49,6 @@ RUN gem update --system && \
 # Create a directory for the app code
 WORKDIR /app
 
-COPY Gemfile Gemfile.lock ./
-
-EXPOSE 3000
+RUN gem install rails
 
 CMD ["/bin/bash"]
