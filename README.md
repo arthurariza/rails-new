@@ -1,6 +1,6 @@
-# Rails 8 + Bun + Vite + Docker App Creator
+# Rails 8 + esbuild + Vite + Docker App Creator
 
-A template for creating new Rails applications with Bun, Vite and Docker and a pre-configured set of gems and tools.
+A template for creating new Rails applications with esbuild, Vite and Docker and a pre-configured set of gems and tools.
 
 ## Usage
 Create a new directory with the name of your project and change directory into it.
@@ -29,15 +29,14 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
---javascript=bun
+--javascript=esbuild
 --skip-jbuilder
---skip-test
 --skip-rubocop
 ```
 
 These options configure your Rails application with:
 - SQLite database
-- Bun as the JavaScript runtime
+- esbuild as the JavaScript runtime
 - Vite as the JavaScript and asset bundler with Hot Module Reload
 - Skips JBuilder
 - Skips default test framework (uses RSpec instead)
@@ -62,8 +61,7 @@ This template installs and configures the following gems and tools:
 - **vite_rails** - Integrates Vite for asset bundling
 - **prettier** - Code formatter for JavaScript/TypeScript
 - **htmlbeautifier** - (Optional) HTML ERB beautifier
-- **rubocop** - Ruby linter, configured with Shopify rules
-- **rubocop-shopify** - Shopify specific code style checking
+- **rubocop** - Ruby linter, configured with custom rules
 
 ### Test Only
 
@@ -75,11 +73,14 @@ This template installs and configures the following gems and tools:
 - TailwindCSS for styles
 - Configures RSpec with FactoryBot and Shoulda Matchers
 - Sets up Bullet for N+1 query detection
+- Pagination ready with Pagy
+- Authorization setup with Pundit
 - Creates a services directory with Rails autoloading
-- Includes a pre-configured Rubocop setup using Shopify rules
+- Includes a pre-configured custom Rubocop setup
 - Optional authentication setup
 - Optional Active Storage setup
 - Creates common files like .env and .env.template
+
 ## Thanks
 
 Based on [this blog post](https://danielabaron.me/blog/kickstart-a-new-rails-project/#rubocop), [this repository](https://github.com/CodingItWrong/apiup/tree/main), [official Rails template guide](https://guides.rubyonrails.org/rails_application_templates.html), and [Ruby On Whales](https://github.com/evilmartians/ruby-on-whales)
