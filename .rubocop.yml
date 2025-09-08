@@ -21,6 +21,8 @@ Rails/I18nLocaleTexts:
 Metrics/BlockLength:
   Exclude:
     - "config/**/*"
+    - "test/**/*"
+    - "spec/**/*"
 
 Layout/LineLength:
   Exclude:
