@@ -116,6 +116,13 @@ after_bundle do
   append_to_file ".gitignore", "\n!.env.template\n"
   git_add_and_commit "Add .env.template to .gitignore"
 
+  if yes?("Pull ai-context? (y/n)", :blue)
+    git clone: "--depth 1 https://github.com/arthurariza/rails-ai-context.git .ai"
+    run "rm -rf .ai/.git"
+    append_to_file ".gitignore", "\n.ai/*\n"
+    git_add_and_commit "Vendor ai-context into .ai"
+  end
+
   if yes?("Do you want to remove the template files? (y/n)", :red)
     remove_file "railsrc"
     remove_file "template.rb"
