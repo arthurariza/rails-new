@@ -35,7 +35,11 @@ git_add_and_commit "Add development and test gems"
 gem_group :development do
   gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)", :green)
   gem "rubocop", require: false
-  gem "rubocop-shopify", require: false
+  gem "rubocop-capybara", require: false
+  gem "rubocop-minitest", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-thread_safety", require: false
 end
 
 git_add_and_commit "Add development gems"
@@ -56,7 +60,6 @@ after_bundle do
   insert_into_file "app/views/layouts/application.html.erb","\n    <%= vite_stylesheet_tag 'application' %>" , after: "<%= vite_client_tag %>"
   gsub_file "app/views/layouts/application.html.erb",'<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>' , ""
   gsub_file "app/views/layouts/application.html.erb",'<%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>' , ""
-  gsub_file "app/views/layouts/application.html.erb",'<%# Includes all stylesheet files in app/assets/stylesheets %>' , ""
   insert_into_file "vite.config.mts","\nserver: {allowedHosts: ['vite']}" , after: "],"
   insert_into_file "vite.config.mts","\nFullReload(['config/routes.rb', 'app/views/**/*']),\nStimulusHMR(),\ntailwindcss()," , after: "plugins: ["
   prepend_to_file "vite.config.mts", "import FullReload from 'vite-plugin-full-reload';\n"
@@ -107,11 +110,6 @@ after_bundle do
     route "root to: 'sessions#new'"
     generate "factory_bot:model user email password"
     git_add_and_commit "Generate authentication"
-  end
-
-  if yes?("Do you want to use Active Storage? (y/n)", :green)
-    rails_command "active_storage:install"
-    git_add_and_commit "Install Active Storage"
   end
 
   append_to_file ".gitignore", "\n!.env.template\n"

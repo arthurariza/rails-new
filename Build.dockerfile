@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1
 
 ARG RUBY_VERSION=3.4.1
-ARG BUN_VERSION=1.2.18
-FROM oven/bun:$BUN_VERSION AS bun-source
 FROM ruby:$RUBY_VERSION-slim-bookworm
 
 # Common dependencies
@@ -20,14 +18,37 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     less \
     git
 
-COPY --from=bun-source /usr/local/bin/bun /usr/local/bin/
+# Node
+ARG NODE_MAJOR=20
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=tmpfs,target=/var/log \
+    apt-get update && \
+    apt-get install -y curl software-properties-common && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    echo "deb https://deb.nodesource.com/node_${NODE_MAJOR}.x $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends nodejs
+    
+# Yarn
+ARG YARN_VERSION=latest
+RUN npm install -g yarn@$YARN_VERSION
 
-WORKDIR /app
+# Configure bundler
+ENV LANG=C.UTF-8 \
+  BUNDLE_JOBS=4 \
+  BUNDLE_RETRY=3
 
-# Rails
-RUN gem install rails
+# Store Bundler settings in the project's root
+ENV BUNDLE_APP_CONFIG=.bundle
+
+# Upgrade RubyGems and install the latest Bundler version
+RUN gem update --system && \
+    gem install bundler
 
 # Create a directory for the app code
-COPY . /app
+WORKDIR /app
+
+RUN gem install rails
 
 CMD ["/bin/bash"]
