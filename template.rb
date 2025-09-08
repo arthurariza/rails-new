@@ -33,7 +33,7 @@ end
 git_add_and_commit "Add development and test gems"
 
 gem_group :development do
-  gem "htmlbeautifier" if yes?("Do you want to use htmlbeautifier? (y/n)", :green)
+  gem "htmlbeautifier" if yes?("Install htmlbeautifier? (y/n)", :green)
   gem "rubocop", require: false
   gem "rubocop-capybara", require: false
   gem "rubocop-minitest", require: false
@@ -106,7 +106,7 @@ after_bundle do
   run "touch app/services/.keep"
   git_add_and_commit "Create directories and files"
 
-  if yes?("Do you want to use authentication? (y/n)", :green)
+  if yes?("Generate authentication? (y/n)", :green)
     generate(:authentication)
     route "root to: 'sessions#new'"
     generate "factory_bot:model user email password"
@@ -123,7 +123,7 @@ after_bundle do
     git_add_and_commit "Vendor ai-context into .ai"
   end
 
-  if yes?("Do you want to remove the template files? (y/n)", :red)
+  if yes?("Remove the template files? (y/n)", :red)
     remove_file "railsrc"
     remove_file "template.rb"
     remove_file "Build.dockerfile"
