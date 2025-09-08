@@ -119,7 +119,7 @@ after_bundle do
   if yes?("Pull ai-context? (y/n)", :blue)
     git clone: "--depth 1 https://github.com/arthurariza/rails-ai-context.git .ai"
     run "rm -rf .ai/.git"
-    append_to_file ".gitignore", "\n.ai/*\n"
+    append_to_file ".gitignore", "\n.ai/\n"
     git_add_and_commit "Vendor ai-context into .ai"
   end
 
