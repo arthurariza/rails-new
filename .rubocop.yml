@@ -28,7 +28,7 @@ Layout/LineLength:
 
 Style/ClassAndModuleChildren:
   Enabled: true
-  EnforcedStyle: compact
+  EnforcedStyle: nested
   SafeAutoCorrect: true
   Exclude:
     - config/**/*
