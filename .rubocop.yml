@@ -1,6 +1,6 @@
 plugins:
   - rubocop-capybara
-  - rubocop-minitest
+  - rubocop-rspec
   - rubocop-performance
   - rubocop-rails
   - rubocop-thread_safety

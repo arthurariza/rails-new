@@ -1,6 +1,6 @@
-# Rails 8 + Bun + Vite + Docker App Creator
+# Rails 8 + ESbuild + Vite + Docker App Creator
 
-A template for creating new Rails applications with Bun, Vite and Docker and a pre-configured set of gems and tools.
+A template for creating new Rails applications with ESbuild, Vite and Docker and a pre-configured set of gems and tools.
 
 ## Usage
 Create a new directory with the name of your project and change directory into it.
@@ -29,7 +29,7 @@ This template uses the following Rails configuration options:
 
 ```
 --database=sqlite3
---javascript=bun
+--javascript=esbuild
 --skip-jbuilder
 --skip-test
 --skip-rubocop
@@ -37,11 +37,11 @@ This template uses the following Rails configuration options:
 
 These options configure your Rails application with:
 - SQLite database
-- Bun as the JavaScript runtime
+- ESbuild as the JavaScript runtime
 - Vite as the JavaScript and asset bundler with Hot Module Reload
 - Skips JBuilder
 - Skips default test framework (uses RSpec instead)
-- Skips Rubocop
+- Skips Rubocop Omakaze
 
 > **Note:** You can customize these options by modifying the `railsrc` file before running the script. Feel free to add or remove options based on your project's specific needs.
 
@@ -49,21 +49,25 @@ These options configure your Rails application with:
 
 This template installs and configures the following gems and tools:
 
+- **Pundit** - Authorization
+- **Pagy** - Pagination
+
+
 ### Development & Test
 
-- **rspec-rails** - Testing framework
-- **factory_bot_rails** - Test data generation
-- **faker** - Fake data generation for tests
-- **dotenv-rails** - Environment variable management
 - **bullet** - N+1 query detection
+- **dotenv-rails** - Environment variable management
+- **faker** - Fake data generation for tests
+- **factory_bot_rails** - Test data generation
+- **rspec-rails** - Testing framework
 
 ### Development Only
 
 - **vite_rails** - Integrates Vite for asset bundling
 - **prettier** - Code formatter for JavaScript/TypeScript
 - **htmlbeautifier** - (Optional) HTML ERB beautifier
-- **rubocop** - Ruby linter, configured with Shopify rules
-- **rubocop-shopify** - Shopify specific code style checking
+- **rubocop** - Ruby linter
+- **tidewave** - Tidewave Rails Mcp
 
 ### Test Only
 
@@ -76,7 +80,9 @@ This template installs and configures the following gems and tools:
 - Configures RSpec with FactoryBot and Shoulda Matchers
 - Sets up Bullet for N+1 query detection
 - Creates a services directory with Rails autoloading
-- Includes a pre-configured Rubocop setup using Shopify rules
+- Includes a pre-configured Rubocop setup
+- Pagy pagination
+- Pundit authorization
 - Optional authentication setup
 - Optional Active Storage setup
 - Creates common files like .env and .env.template
