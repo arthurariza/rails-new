@@ -30,6 +30,7 @@ end
 git_add_and_commit "Add development and test gems"
 
 gem_group :development do
+  gem "hotwire-spark"
   gem "htmlbeautifier" if yes?("Install htmlbeautifier? (y/n)", :green)
   gem "rubocop", require: false
   gem "rubocop-capybara", require: false
@@ -48,6 +49,12 @@ gem_group :test do
 end
 
 git_add_and_commit "Add test gems"
+
+if yes?("Would you like to install Devise?")
+  gem "devise"
+
+  devise_model = ask("What would you like the user model to be called?", default: "User")
+end
 
 # adds lines to `config/application.rb`
 environment 'config.autoload_paths << Rails.root.join("services")'
@@ -80,16 +87,24 @@ after_bundle do
   insert_into_file "app/controllers/application_controller.rb", "\n  include Pagy::Backend", after: "ActionController::Base"
   insert_into_file "app/helpers/application_helper.rb", "\n  include Pagy::Frontend", after: "ApplicationHelper"
   git_add_and_commit "Install Pagy"
-
+  
   generate "bullet:install"
   git_add_and_commit "Install Bullet"
-
+  
   # create directories and files
   run "mkdir spec/factories"
   run "touch app/services/.keep"
   git_add_and_commit "Create directories and files"
+  
+  if devise_model
+    generate "devise:install"
+    generate "devise", devise_model
+    generate "devise:views"
+    
+    insert_into_file "config/environments/development.rb", "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", after: "do"
+  end
 
-  if yes?("Generate authentication? (y/n)", :green)
+  if !devise_model && yes?("Generate authentication? (y/n)", :green)
     generate(:authentication)
     route "root to: 'sessions#new'"
     generate "factory_bot:model user email password"
