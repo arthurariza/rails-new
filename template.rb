@@ -13,9 +13,6 @@ end
 
 git_add_and_commit "Initial commit"
 
-gem "vite_rails"
-git_add_and_commit "Add vite_rails gem"
-
 gem "pundit"
 git_add_and_commit "Add pundit gem"
 
@@ -38,7 +35,8 @@ gem_group :development do
   gem "rubocop-capybara", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
   gem "rubocop-thread_safety", require: false
   gem 'tidewave'
 end
@@ -56,21 +54,6 @@ environment 'config.autoload_paths << Rails.root.join("services")'
 
 # commands to run after `bundle install`
 after_bundle do
-  run "bundle exec vite install"
-  run "yarn add -D vite-plugin-full-reload vite-plugin-stimulus-hmr prettier tailwindcss @tailwindcss/vite @tailwindcss/forms @tailwindcss/typography"
-  insert_into_file "app/views/layouts/application.html.erb","\n    <%= vite_stylesheet_tag 'application' %>" , after: "<%= vite_client_tag %>"
-  gsub_file "app/views/layouts/application.html.erb",'<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>' , ""
-  gsub_file "app/views/layouts/application.html.erb",'<%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>' , ""
-  insert_into_file "vite.config.mts","\nserver: {allowedHosts: ['vite']}" , after: "],"
-  insert_into_file "vite.config.mts","\nFullReload(['config/routes.rb', 'app/views/**/*']),\nStimulusHMR(),\ntailwindcss()," , after: "plugins: ["
-  prepend_to_file "vite.config.mts", "import FullReload from 'vite-plugin-full-reload';\n"
-  prepend_to_file "vite.config.mts", "import StimulusHMR from 'vite-plugin-stimulus-hmr';\n"
-  prepend_to_file "vite.config.mts", "import tailwindcss from '@tailwindcss/vite';\n"
-  git_add_and_commit "Install Vite, Plugins and Tailwind"
-
-  append_to_file "app/javascript/entrypoints/application.js", "import * as Turbo from '@hotwired/turbo'\nTurbo.start();\nimport '../controllers'\n"
-  git_add_and_commit "Install Turbo and Stimulus"
-
   # setup RSpec testing
   run "bin/rails generate rspec:install"
   git_add_and_commit "Setup RSpec"
@@ -131,9 +114,6 @@ after_bundle do
     remove_file "bin/rails-new-docker"
     git_add_and_commit "Cleanup"
   end
-
-  run "yarn prettier --write . || true"
-  git_add_and_commit "Prettier auto-correct"
 
   run "bundle binstubs rubocop"
   run "bin/rubocop -a || true"

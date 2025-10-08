@@ -1,6 +1,6 @@
-# Rails 8 + ESbuild + Vite + Docker App Creator
+# Rails 8 + ESbuild + Docker App Creator
 
-A template for creating new Rails applications with ESbuild, Vite and Docker and a pre-configured set of gems and tools.
+A template for creating new Rails applications with ESbuild and Docker and a pre-configured set of gems and tools.
 
 ## Usage
 Create a new directory with the name of your project and change directory into it.
@@ -38,7 +38,6 @@ This template uses the following Rails configuration options:
 These options configure your Rails application with:
 - SQLite database
 - ESbuild as the JavaScript runtime
-- Vite as the JavaScript and asset bundler with Hot Module Reload
 - Skips JBuilder
 - Skips default test framework (uses RSpec instead)
 - Skips Rubocop Omakaze
@@ -63,7 +62,6 @@ This template installs and configures the following gems and tools:
 
 ### Development Only
 
-- **vite_rails** - Integrates Vite for asset bundling
 - **prettier** - Code formatter for JavaScript/TypeScript
 - **htmlbeautifier** - (Optional) HTML ERB beautifier
 - **rubocop** - Ruby linter
@@ -75,7 +73,6 @@ This template installs and configures the following gems and tools:
 
 ## Features
 
-- Vite-powered frontend with Hot Module Reload
 - TailwindCSS for styles
 - Configures RSpec with FactoryBot and Shoulda Matchers
 - Sets up Bullet for N+1 query detection
@@ -86,6 +83,7 @@ This template installs and configures the following gems and tools:
 - Optional authentication setup
 - Optional Active Storage setup
 - Creates common files like .env and .env.template
+
 ## Thanks
 
 Based on [this blog post](https://danielabaron.me/blog/kickstart-a-new-rails-project/#rubocop), [this repository](https://github.com/CodingItWrong/apiup/tree/main), [official Rails template guide](https://guides.rubyonrails.org/rails_application_templates.html), and [Ruby On Whales](https://github.com/evilmartians/ruby-on-whales)

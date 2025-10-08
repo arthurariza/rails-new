@@ -3,6 +3,7 @@ plugins:
   - rubocop-rspec
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rspec_rails
   - rubocop-thread_safety
 
 inherit_mode:
