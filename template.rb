@@ -13,6 +13,12 @@ end
 
 git_add_and_commit "Initial commit"
 
+if yes?("Would you like to install Devise?")
+  gem "devise"
+  devise_model = ask("What would you like the user model to be called?", default: "User")
+  git_add_and_commit "Add devise gem"
+end
+
 gem "pundit"
 git_add_and_commit "Add pundit gem"
 
@@ -49,12 +55,6 @@ gem_group :test do
 end
 
 git_add_and_commit "Add test gems"
-
-if yes?("Would you like to install Devise?")
-  gem "devise"
-
-  devise_model = ask("What would you like the user model to be called?", default: "User")
-end
 
 # adds lines to `config/application.rb`
 environment 'config.autoload_paths << Rails.root.join("services")'
@@ -101,7 +101,9 @@ after_bundle do
     generate "devise", devise_model
     generate "devise:views"
     
-    insert_into_file "config/environments/development.rb", "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }", after: "do"
+    insert_into_file "config/environments/development.rb", "\n  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }\n", after: "do"
+
+    git_add_and_commit "Devise install"
   end
 
   if !devise_model && yes?("Generate authentication? (y/n)", :green)
@@ -131,7 +133,7 @@ after_bundle do
   end
 
   run "bundle binstubs rubocop"
-  run "bin/rubocop -a || true"
+  run "bin/rubocop -A || true"
   git_add_and_commit "Rubocop auto-correct"
 
   run "bin/rails db:prepare"
