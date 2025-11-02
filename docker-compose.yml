@@ -3,7 +3,7 @@ x-ruby: &ruby
     context: .
     dockerfile: ./Dockerfile.dev
     args:
-      RUBY_VERSION: '3.4.1'
+      RUBY_VERSION: '3.4.7'
       NODE_MAJOR: '20'
   environment:
     RAILS_ENV: development
